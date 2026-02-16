@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widget_background">#FFFFFFFF</color>
-    <color name="widget_primary">#FF7C5CFC</color>
-    <color name="widget_secondary">#FF666666</color>
-    <color name="widget_tertiary">#FF999999</color>
+    <color name="widget_background">@android:color/transparent</color>
+    <color name="widget_clock">#FFFFFFFF</color>
+    <color name="widget_primary">#FFFFFFFF</color>
+    <color name="widget_secondary">#B3FFFFFF</color>
+    <color name="widget_tertiary">#A0FFFFFF</color>
+    <color name="widget_shadow">#67000000</color>
 </resources>

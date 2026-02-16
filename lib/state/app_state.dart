@@ -7,13 +7,14 @@ class AppState extends ChangeNotifier {
   int _currentTabIndex = 0;
   int _calendarYear = DateTime.now().year;
   bool _hasSeenOnboarding = false;
+  bool _widgetTransparent = true;
   late IfcDate _todayIfc;
   late DateTime _todayGregorian;
 
   AppState() {
     _todayGregorian = DateTime.now();
     _todayIfc = IfcDate.fromGregorian(_todayGregorian);
-    _updateHomeWidget();
+    _loadWidgetPreference();
   }
 
   // Tab navigation
@@ -46,6 +47,26 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Widget transparency
+  bool get widgetTransparent => _widgetTransparent;
+
+  Future<void> setWidgetTransparent(bool value) async {
+    if (_widgetTransparent != value) {
+      _widgetTransparent = value;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('widgetTransparent', value);
+      await _updateHomeWidget();
+      notifyListeners();
+    }
+  }
+
+  Future<void> _loadWidgetPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    _widgetTransparent = prefs.getBool('widgetTransparent') ?? true;
+    _updateHomeWidget();
+    notifyListeners();
+  }
+
   Future<void> _updateHomeWidget() async {
     try {
       // IFC date: "Weekday, DD/MM" or special day name
@@ -61,6 +82,7 @@ class AppState extends ChangeNotifier {
       final gregWeekday = weekdays[g.weekday - 1];
       await HomeWidget.saveWidgetData('gregorian_date_text',
           '$gregWeekday, ${g.day}/${g.month.toString().padLeft(2, '0')}');
+      await HomeWidget.saveWidgetData('widget_transparent', _widgetTransparent);
       await HomeWidget.updateWidget(
         androidName: 'IfcWidgetProvider',
         iOSName: 'IfcWidget',
