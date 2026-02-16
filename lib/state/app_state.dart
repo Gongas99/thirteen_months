@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/ifc_date.dart';
@@ -8,6 +8,7 @@ class AppState extends ChangeNotifier {
   int _calendarYear = DateTime.now().year;
   bool _hasSeenOnboarding = false;
   bool _widgetTransparent = true;
+  Locale? _locale; // null = follow system
   late IfcDate _todayIfc;
   late DateTime _todayGregorian;
 
@@ -15,6 +16,8 @@ class AppState extends ChangeNotifier {
     _todayGregorian = DateTime.now();
     _todayIfc = IfcDate.fromGregorian(_todayGregorian);
     _loadWidgetPreference();
+    _loadBirthdayPromptState();
+    _loadLocalePreference();
   }
 
   // Tab navigation
@@ -89,6 +92,56 @@ class AppState extends ChangeNotifier {
       );
     } catch (_) {
       // Widget may not be placed yet
+    }
+  }
+
+  // Birthday prompt dismissal
+  bool _birthdayPromptDismissed = false;
+  bool get birthdayPromptDismissed => _birthdayPromptDismissed;
+
+  Future<void> dismissBirthdayPrompt() async {
+    _birthdayPromptDismissed = true;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('birthdayPromptDismissed', true);
+    notifyListeners();
+  }
+
+  Future<void> _loadBirthdayPromptState() async {
+    final prefs = await SharedPreferences.getInstance();
+    _birthdayPromptDismissed =
+        prefs.getBool('birthdayPromptDismissed') ?? false;
+    notifyListeners();
+  }
+
+  // Locale
+  Locale? get locale => _locale;
+
+  static const supportedLocales = [
+    Locale('en'),
+    Locale('pt'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('de'),
+    Locale('it'),
+  ];
+
+  Future<void> setLocale(Locale? locale) async {
+    _locale = locale;
+    final prefs = await SharedPreferences.getInstance();
+    if (locale == null) {
+      await prefs.remove('locale');
+    } else {
+      await prefs.setString('locale', locale.languageCode);
+    }
+    notifyListeners();
+  }
+
+  Future<void> _loadLocalePreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    final code = prefs.getString('locale');
+    if (code != null) {
+      _locale = Locale(code);
+      notifyListeners();
     }
   }
 

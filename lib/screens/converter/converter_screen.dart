@@ -1,8 +1,8 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import '../../core/ifc_date.dart';
-import '../../core/ifc_constants.dart';
 import '../../core/theme.dart';
+import '../../l10n/ifc_localizations.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({super.key});
@@ -25,14 +25,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
   String _selectedSpecial = 'none'; // 'none', 'yearDay', 'leapDay'
   DateTime? _convertedGregorianDate;
 
-  final _random = Random();
-  late String _funFact;
-
   @override
   void initState() {
     super.initState();
-    _funFact = IfcConstants.converterFunFacts[
-        _random.nextInt(IfcConstants.converterFunFacts.length)];
     _convertGregorianToIfc();
   }
 
@@ -74,16 +69,11 @@ class _ConverterScreenState extends State<ConverterScreen> {
     });
   }
 
-  void _refreshFunFact() {
-    setState(() {
-      _funFact = IfcConstants.converterFunFacts[
-          _random.nextInt(IfcConstants.converterFunFacts.length)];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -97,7 +87,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
               gregorianToIfc: _gregorianToIfc,
               onChanged: (value) {
                 setState(() => _gregorianToIfc = value);
-                _refreshFunFact();
               },
             ),
             const SizedBox(height: 24),
@@ -153,7 +142,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        _funFact,
+                        l10n.converterFunFact,
                         style: theme.textTheme.bodySmall,
                       ),
                     ),
@@ -180,6 +169,7 @@ class _DirectionToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -191,14 +181,14 @@ class _DirectionToggle extends StatelessWidget {
         children: [
           Expanded(
             child: _ToggleButton(
-              label: 'Gregorian → IFC',
+              label: l10n.gregorianToIfc,
               isSelected: gregorianToIfc,
               onTap: () => onChanged(true),
             ),
           ),
           Expanded(
             child: _ToggleButton(
-              label: 'IFC → Gregorian',
+              label: l10n.ifcToGregorian,
               isSelected: !gregorianToIfc,
               onTap: () => onChanged(false),
             ),
@@ -258,6 +248,7 @@ class _GregorianInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Card(
       child: InkWell(
@@ -280,7 +271,7 @@ class _GregorianInput extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Gregorian Date',
+                  Text(l10n.gregorianDate,
                       style: theme.textTheme.labelMedium),
                   const SizedBox(height: 4),
                   Text(
@@ -309,6 +300,19 @@ class _IfcResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    // Build localized formatted string
+    String formattedDate;
+    if (ifcDate.isYearDay) {
+      formattedDate = l10n.yearDay;
+    } else if (ifcDate.isLeapDay) {
+      formattedDate = l10n.leapDay;
+    } else {
+      final weekday = IfcLocalizations.weekdayName(l10n, ifcDate.weekdayIndex);
+      final month = IfcLocalizations.monthName(l10n, ifcDate.month);
+      formattedDate = '$weekday, $month ${ifcDate.day}';
+    }
 
     return Card(
       child: Container(
@@ -329,14 +333,14 @@ class _IfcResultCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'IFC Date',
+              l10n.ifcDate,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: AppColors.primaryPurple,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              ifcDate.formatted,
+              formattedDate,
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -348,7 +352,7 @@ class _IfcResultCard extends StatelessWidget {
             const SizedBox(height: 12),
             if (!ifcDate.isYearDay && !ifcDate.isLeapDay) ...[
               Text(
-                'Month ${ifcDate.month} of 13  •  Week ${ifcDate.weekOfMonth} of 4',
+                l10n.monthXOfYWeekXOfY(ifcDate.month, ifcDate.weekOfMonth),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: AppColors.primaryPurple,
                 ),
@@ -356,8 +360,8 @@ class _IfcResultCard extends StatelessWidget {
             ] else ...[
               Text(
                 ifcDate.isYearDay
-                    ? 'Outside any month — a universal holiday'
-                    : 'Between June and Sol — outside the week',
+                    ? l10n.yearDaySpecialDesc
+                    : l10n.leapDaySpecialDesc,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: AppColors.specialDayGreen,
                 ),
@@ -394,6 +398,7 @@ class _IfcInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isLeap = IfcDate.isLeapYear(year);
 
     return Card(
@@ -402,12 +407,12 @@ class _IfcInput extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('IFC Date', style: theme.textTheme.labelMedium),
+            Text(l10n.ifcDate, style: theme.textTheme.labelMedium),
             const SizedBox(height: 12),
             // Year
             Row(
               children: [
-                const SizedBox(width: 80, child: Text('Year')),
+                SizedBox(width: 80, child: Text(l10n.labelYear)),
                 Expanded(
                   child: _NumberPicker(
                     value: year,
@@ -422,24 +427,24 @@ class _IfcInput extends StatelessWidget {
             // Special day toggle
             Row(
               children: [
-                const SizedBox(width: 80, child: Text('Type')),
+                SizedBox(width: 80, child: Text(l10n.labelType)),
                 Expanded(
                   child: DropdownButton<String>(
                     value: special,
                     isExpanded: true,
                     items: [
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'none',
-                        child: Text('Regular day'),
+                        child: Text(l10n.regularDay),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'yearDay',
-                        child: Text('Year Day'),
+                        child: Text(l10n.yearDay),
                       ),
                       if (isLeap)
-                        const DropdownMenuItem(
+                        DropdownMenuItem(
                           value: 'leapDay',
-                          child: Text('Leap Day'),
+                          child: Text(l10n.leapDay),
                         ),
                     ],
                     onChanged: (v) {
@@ -454,7 +459,7 @@ class _IfcInput extends StatelessWidget {
               // Month
               Row(
                 children: [
-                  const SizedBox(width: 80, child: Text('Month')),
+                  SizedBox(width: 80, child: Text(l10n.labelMonth)),
                   Expanded(
                     child: DropdownButton<int>(
                       value: month,
@@ -463,7 +468,8 @@ class _IfcInput extends StatelessWidget {
                         final m = i + 1;
                         return DropdownMenuItem(
                           value: m,
-                          child: Text('$m — ${IfcDate.monthNames[m]}'),
+                          child: Text(
+                              '$m — ${IfcLocalizations.monthName(l10n, m)}'),
                         );
                       }),
                       onChanged: (v) {
@@ -477,7 +483,7 @@ class _IfcInput extends StatelessWidget {
               // Day
               Row(
                 children: [
-                  const SizedBox(width: 80, child: Text('Day')),
+                  SizedBox(width: 80, child: Text(l10n.labelDay)),
                   Expanded(
                     child: _NumberPicker(
                       value: day,
@@ -541,19 +547,13 @@ class _GregorianResultCard extends StatelessWidget {
 
   const _GregorianResultCard({required this.date});
 
-  static const _months = [
-    '', 'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-
-  static const _weekdays = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-    'Friday', 'Saturday', 'Sunday',
-  ];
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    final weekday = IfcLocalizations.gregWeekday(l10n, date.weekday);
+    final month = IfcLocalizations.gregMonth(l10n, date.month);
 
     return Card(
       child: Container(
@@ -563,12 +563,12 @@ class _GregorianResultCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Gregorian Date',
+              l10n.gregorianDate,
               style: theme.textTheme.labelMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              '${_weekdays[date.weekday - 1]}, ${_months[date.month]} ${date.day}',
+              '$weekday, $month ${date.day}',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

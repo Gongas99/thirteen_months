@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import '../core/ifc_date.dart';
 import '../core/theme.dart';
 
@@ -10,6 +11,7 @@ class SpecialDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isLeap = IfcDate.isLeapYear(year);
 
     return Card(
@@ -19,7 +21,7 @@ class SpecialDayCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Special Days',
+              l10n.specialDays,
               style: theme.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -27,16 +29,16 @@ class SpecialDayCard extends StatelessWidget {
             const SizedBox(height: 12),
             _SpecialDayRow(
               icon: Icons.celebration,
-              title: 'Year Day',
-              subtitle: 'After December 28 — outside any month or week',
+              title: l10n.yearDay,
+              subtitle: l10n.yearDayDesc,
               color: AppColors.specialDayGreen,
             ),
             if (isLeap) ...[
               const SizedBox(height: 8),
               _SpecialDayRow(
                 icon: Icons.add_circle_outline,
-                title: 'Leap Day',
-                subtitle: 'Between June 28 and Sol 1 — outside the week',
+                title: l10n.leapDay,
+                subtitle: l10n.leapDayDesc,
                 color: AppColors.specialDayGreen,
               ),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../core/ifc_constants.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import '../../core/theme.dart';
+import '../../l10n/ifc_localizations.dart';
 import '../../widgets/month_grid.dart';
 import '../../widgets/timeline_item.dart';
 import '../../widgets/faq_tile.dart';
@@ -11,6 +12,27 @@ class LearnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    final quickFacts = IfcLocalizations.quickFacts(l10n);
+
+    final timeline = [
+      (l10n.timelineYear1, l10n.timelineTitle1, l10n.timelineDesc1),
+      (l10n.timelineYear2, l10n.timelineTitle2, l10n.timelineDesc2),
+      (l10n.timelineYear3, l10n.timelineTitle3, l10n.timelineDesc3),
+      (l10n.timelineYear4, l10n.timelineTitle4, l10n.timelineDesc4),
+      (l10n.timelineYear5, l10n.timelineTitle5, l10n.timelineDesc5),
+      (l10n.timelineYear6, l10n.timelineTitle6, l10n.timelineDesc6),
+    ];
+
+    final faqItems = [
+      (l10n.faq1Question, l10n.faq1Answer),
+      (l10n.faq2Question, l10n.faq2Answer),
+      (l10n.faq3Question, l10n.faq3Answer),
+      (l10n.faq4Question, l10n.faq4Answer),
+      (l10n.faq5Question, l10n.faq5Answer),
+      (l10n.faq6Question, l10n.faq6Answer),
+    ];
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -20,7 +42,7 @@ class LearnScreen extends StatelessWidget {
           children: [
             // Header
             Text(
-              'The whole idea\nin 30 seconds',
+              l10n.learnHeader,
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -28,7 +50,7 @@ class LearnScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Quick facts
-            ...IfcConstants.quickFacts.map((fact) => Padding(
+            ...quickFacts.map((fact) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +69,7 @@ class LearnScreen extends StatelessWidget {
 
             // Generic month grid
             Text(
-              'Every month looks like this',
+              l10n.everyMonthLooksLikeThis,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -67,20 +89,19 @@ class LearnScreen extends StatelessWidget {
 
             // History timeline
             Text(
-              'History',
+              l10n.historyTitle,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 16),
-            ...IfcConstants.historyTimeline.asMap().entries.map((entry) {
+            ...timeline.asMap().entries.map((entry) {
               final item = entry.value;
-              final isLast =
-                  entry.key == IfcConstants.historyTimeline.length - 1;
+              final isLast = entry.key == timeline.length - 1;
               return TimelineItem(
-                year: item.year,
-                title: item.title,
-                description: item.description,
+                year: item.$1,
+                title: item.$2,
+                description: item.$3,
                 isLast: isLast,
               );
             }),
@@ -89,15 +110,15 @@ class LearnScreen extends StatelessWidget {
 
             // FAQ
             Text(
-              'FAQ',
+              l10n.faqTitle,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 8),
-            ...IfcConstants.faq.map((entry) => FaqTile(
-                  question: entry.question,
-                  answer: entry.answer,
+            ...faqItems.map((entry) => FaqTile(
+                  question: entry.$1,
+                  answer: entry.$2,
                 )),
 
             const SizedBox(height: 32),

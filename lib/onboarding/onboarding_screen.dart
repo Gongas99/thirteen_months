@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../core/theme.dart';
 import '../state/app_state.dart';
@@ -23,41 +24,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   late final AnimationController _skipFadeController;
   late final Animation<double> _skipFadeAnim;
 
-  static const _contentPages = [
-    _OnboardingPageData(
-      icon: Icons.calendar_month,
-      title: '13 Perfect Months',
-      body:
-          'Every month has exactly 28 days — 4 perfect weeks. '
-          'No more wondering what day the 15th falls on.',
-    ),
-    _OnboardingPageData(
-      icon: Icons.wb_sunny,
-      title: 'Meet Sol',
-      body:
-          'The 7th month, Sol, sits between June and July. '
-          'Named after the Sun, it completes the 13-month year.',
-    ),
-    _OnboardingPageData(
-      icon: Icons.celebration,
-      title: 'Year Day & Leap Day',
-      body:
-          'Year Day (after Dec 28) belongs to no month or week — '
-          'a universal holiday. Leap Day works the same way, '
-          'falling between June and Sol.',
-    ),
-    _OnboardingPageData(
-      icon: Icons.explore,
-      title: 'Explore the Calendar',
-      body:
-          'See today\'s IFC date, browse all 13 months, '
-          'convert dates, and learn the history. '
-          'Let\'s get started!',
-    ),
-  ];
-
   // Total pages: welcome (0) + 4 content pages
-  int get _totalPages => _contentPages.length + 1;
+  static const _totalPages = 5;
 
   @override
   void initState() {
@@ -120,15 +88,39 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     super.dispose();
   }
 
-  String _buttonText() {
-    if (_currentPage == 0) return 'Get Started';
-    if (_currentPage == _totalPages - 1) return 'Get Started';
-    return 'Next';
+  String _buttonText(AppLocalizations l10n) {
+    if (_currentPage == 0) return l10n.getStarted;
+    if (_currentPage == _totalPages - 1) return l10n.getStarted;
+    return l10n.next;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    final contentPages = [
+      _OnboardingPageData(
+        icon: Icons.calendar_month,
+        title: l10n.onboardingTitle1,
+        body: l10n.onboardingBody1,
+      ),
+      _OnboardingPageData(
+        icon: Icons.wb_sunny,
+        title: l10n.onboardingTitle2,
+        body: l10n.onboardingBody2,
+      ),
+      _OnboardingPageData(
+        icon: Icons.celebration,
+        title: l10n.onboardingTitle3,
+        body: l10n.onboardingBody3,
+      ),
+      _OnboardingPageData(
+        icon: Icons.explore,
+        title: l10n.onboardingTitle4,
+        body: l10n.onboardingBody4,
+      ),
+    ];
 
     return Scaffold(
       body: SafeArea(
@@ -151,7 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 child: TextButton(
                   onPressed: _complete,
                   child: Text(
-                    'Skip',
+                    l10n.skip,
                     style: TextStyle(color: theme.textTheme.bodySmall?.color),
                   ),
                 ),
@@ -165,8 +157,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     setState(() => _currentPage = page),
                 itemCount: _totalPages,
                 itemBuilder: (context, index) {
-                  if (index == 0) return _buildWelcomePage(theme);
-                  final page = _contentPages[index - 1];
+                  if (index == 0) return _buildWelcomePage(theme, l10n);
+                  final page = contentPages[index - 1];
                   return _buildContentPage(theme, page);
                 },
               ),
@@ -205,7 +197,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     ),
                   ),
                   child: Text(
-                    _buttonText(),
+                    _buttonText(l10n),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -221,7 +213,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     );
   }
 
-  Widget _buildWelcomePage(ThemeData theme) {
+  Widget _buildWelcomePage(ThemeData theme, AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
@@ -261,7 +253,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ),
           const SizedBox(height: 40),
           Text(
-            'What if every month\nwas perfect?',
+            l10n.onboardingWelcomeTitle,
             style: theme.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -269,8 +261,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ),
           const SizedBox(height: 16),
           Text(
-            'Discover a calendar where every month has '
-            'exactly 28 days — simple, balanced, and harmonious.',
+            l10n.onboardingWelcomeBody,
             style: theme.textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),

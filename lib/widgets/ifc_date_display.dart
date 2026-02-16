@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import '../core/ifc_date.dart';
 import '../core/theme.dart';
+import '../l10n/ifc_localizations.dart';
 
 class IfcDateDisplay extends StatelessWidget {
   final IfcDate ifcDate;
@@ -10,6 +12,7 @@ class IfcDateDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isSpecial = ifcDate.isYearDay || ifcDate.isLeapDay;
     final accentColor =
         isSpecial ? AppColors.specialDayGreen : AppColors.primaryPurple;
@@ -38,7 +41,7 @@ class IfcDateDisplay extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                '13-Month Calendar',
+                l10n.label13MonthCalendar,
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: accentColor,
                   fontWeight: FontWeight.w600,
@@ -47,7 +50,9 @@ class IfcDateDisplay extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              ifcDate.weekdayName,
+              isSpecial
+                  ? ''
+                  : IfcLocalizations.weekdayName(l10n, ifcDate.weekdayIndex),
               style: theme.textTheme.titleMedium?.copyWith(
                 color: accentColor,
                 fontWeight: FontWeight.w500,
@@ -56,7 +61,7 @@ class IfcDateDisplay extends StatelessWidget {
             const SizedBox(height: 4),
             if (isSpecial)
               Text(
-                ifcDate.isYearDay ? 'Year Day' : 'Leap Day',
+                ifcDate.isYearDay ? l10n.yearDay : l10n.leapDay,
                 style: theme.textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: accentColor,
@@ -64,7 +69,7 @@ class IfcDateDisplay extends StatelessWidget {
               )
             else ...[
               Text(
-                '${ifcDate.monthName} ${ifcDate.day}',
+                '${IfcLocalizations.monthName(l10n, ifcDate.month)} ${ifcDate.day}',
                 style: theme.textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -81,9 +86,9 @@ class IfcDateDisplay extends StatelessWidget {
             Text(
               isSpecial
                   ? (ifcDate.isYearDay
-                      ? 'A day outside the calendar — a universal holiday'
-                      : 'An extra day between June and Sol')
-                  : '28 days every month',
+                      ? l10n.dayOutsideCalendar
+                      : l10n.extraDayBetween)
+                  : l10n.daysEveryMonth,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
               ),

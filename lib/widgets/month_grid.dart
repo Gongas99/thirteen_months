@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import '../core/ifc_date.dart';
 import '../core/theme.dart';
+import '../l10n/ifc_localizations.dart';
 
 class MonthGrid extends StatelessWidget {
   final int month;
@@ -26,6 +28,9 @@ class MonthGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final abbrs = IfcLocalizations.weekdayAbbreviations(l10n);
+
     final headerStyle = (compact
             ? theme.textTheme.labelSmall
             : theme.textTheme.labelMedium)
@@ -33,14 +38,16 @@ class MonthGrid extends StatelessWidget {
       fontWeight: FontWeight.w600,
       color: theme.textTheme.bodySmall?.color,
     );
-    final dayStyle = compact ? theme.textTheme.bodySmall : theme.textTheme.bodyMedium;
+    final dayStyle = compact
+        ? theme.textTheme.bodyMedium?.copyWith(fontSize: 13)
+        : theme.textTheme.bodyMedium;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         // Header row: S M T W T F S
         Row(
-          children: IfcDate.weekdayAbbreviations.map((abbr) {
+          children: abbrs.map((abbr) {
             return Expanded(
               child: Center(
                 child: Text(
@@ -64,7 +71,7 @@ class MonthGrid extends StatelessWidget {
                   onTap: onDayTap != null ? () => onDayTap!(day) : null,
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      vertical: compact ? 2 : 6,
+                      vertical: compact ? 4 : 6,
                     ),
                     decoration: isHighlighted
                         ? BoxDecoration(

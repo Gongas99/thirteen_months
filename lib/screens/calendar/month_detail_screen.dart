@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../core/ifc_date.dart';
 import '../../core/theme.dart';
+import '../../l10n/ifc_localizations.dart';
 import '../../state/app_state.dart';
 import '../../widgets/month_grid.dart';
 
@@ -37,10 +39,12 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
     final year = appState.calendarYear;
     final today = appState.todayIfc;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${IfcDate.monthNames[_currentMonth]} $year'),
+        title: Text(
+            '${IfcLocalizations.monthName(l10n, _currentMonth)} $year'),
       ),
       body: PageView.builder(
         controller: _pageController,
@@ -56,13 +60,13 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  IfcDate.monthNames[month],
+                  IfcLocalizations.monthName(l10n, month),
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'Month $month of 13',
+                  l10n.monthXOfY(month),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.primaryPurple,
                   ),
@@ -83,7 +87,7 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
                 const Spacer(),
                 Center(
                   child: Text(
-                    'Swipe to navigate between months',
+                    l10n.swipeToNavigate,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.textTheme.bodySmall?.color
                           ?.withValues(alpha: 0.5),
@@ -100,6 +104,20 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
 
   void _showDayInfo(BuildContext context, IfcDate ifc, DateTime greg) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    // Build localized formatted string
+    String formattedDate;
+    if (ifc.isYearDay) {
+      formattedDate = l10n.yearDay;
+    } else if (ifc.isLeapDay) {
+      formattedDate = l10n.leapDay;
+    } else {
+      final weekday = IfcLocalizations.weekdayName(l10n, ifc.weekdayIndex);
+      final month = IfcLocalizations.monthName(l10n, ifc.month);
+      formattedDate = '$weekday, $month ${ifc.day}';
+    }
+
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -112,7 +130,7 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                ifc.formatted,
+                formattedDate,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -126,7 +144,7 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Gregorian:', style: theme.textTheme.bodyMedium),
+                  Text(l10n.gregorianColon, style: theme.textTheme.bodyMedium),
                   Text(
                     '${greg.year}-${greg.month.toString().padLeft(2, '0')}-${greg.day.toString().padLeft(2, '0')}',
                     style: theme.textTheme.bodyMedium?.copyWith(
@@ -139,9 +157,10 @@ class _MonthDetailScreenState extends State<MonthDetailScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Week of month:', style: theme.textTheme.bodyMedium),
+                  Text(l10n.weekOfMonthColon,
+                      style: theme.textTheme.bodyMedium),
                   Text(
-                    '${ifc.weekOfMonth} of 4',
+                    l10n.xOfY(ifc.weekOfMonth, 4),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -166,6 +185,7 @@ class _MonthInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final firstDay = IfcDate(month: month, day: 1, year: year);
     final lastDay = IfcDate(month: month, day: 28, year: year);
     final gregFirst = firstDay.toGregorian();
@@ -182,7 +202,7 @@ class _MonthInfoCard extends StatelessWidget {
           children: [
             Column(
               children: [
-                Text('Gregorian range',
+                Text(l10n.gregorianRange,
                     style: theme.textTheme.labelSmall),
                 const SizedBox(height: 4),
                 Text(
@@ -195,7 +215,7 @@ class _MonthInfoCard extends StatelessWidget {
             ),
             Column(
               children: [
-                Text('Days', style: theme.textTheme.labelSmall),
+                Text(l10n.labelDays, style: theme.textTheme.labelSmall),
                 const SizedBox(height: 4),
                 Text(
                   '28',
@@ -207,7 +227,7 @@ class _MonthInfoCard extends StatelessWidget {
             ),
             Column(
               children: [
-                Text('Weeks', style: theme.textTheme.labelSmall),
+                Text(l10n.labelWeeks, style: theme.textTheme.labelSmall),
                 const SizedBox(height: 4),
                 Text(
                   '4',

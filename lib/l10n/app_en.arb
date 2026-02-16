@@ -1,0 +1,209 @@
+{
+  "@@locale": "en",
+
+  "tabToday": "Today",
+  "tabCalendar": "Calendar",
+  "tabConverter": "Converter",
+  "tabLearn": "Learn",
+
+  "label13MonthCalendar": "13-Month Calendar",
+  "yearDay": "Year Day",
+  "leapDay": "Leap Day",
+  "todayIsAlso": "today is also",
+  "labelGregorian": "Gregorian",
+
+  "birthdayPromptTitle": "When is your birthday?",
+  "birthdayPromptSubtitle": "Find out your birthday in the 13-month calendar",
+
+  "settingsTitle": "Settings",
+  "settingsWidget": "Widget",
+  "settingsTransparentBg": "Transparent background",
+  "settingsTransparentBgDesc": "Widget floats over your wallpaper",
+  "settingsLanguage": "Language",
+  "languageSystem": "System default",
+  "languageEn": "English",
+  "languagePt": "Português",
+  "languageEs": "Español",
+  "languageFr": "Français",
+  "languageDe": "Deutsch",
+  "languageIt": "Italiano",
+
+  "monthJanuary": "January",
+  "monthFebruary": "February",
+  "monthMarch": "March",
+  "monthApril": "April",
+  "monthMay": "May",
+  "monthJune": "June",
+  "monthSol": "Sol",
+  "monthJuly": "July",
+  "monthAugust": "August",
+  "monthSeptember": "September",
+  "monthOctober": "October",
+  "monthNovember": "November",
+  "monthDecember": "December",
+
+  "weekdaySunday": "Sunday",
+  "weekdayMonday": "Monday",
+  "weekdayTuesday": "Tuesday",
+  "weekdayWednesday": "Wednesday",
+  "weekdayThursday": "Thursday",
+  "weekdayFriday": "Friday",
+  "weekdaySaturday": "Saturday",
+
+  "weekdayAbbrSun": "Sun",
+  "weekdayAbbrMon": "Mon",
+  "weekdayAbbrTue": "Tue",
+  "weekdayAbbrWed": "Wed",
+  "weekdayAbbrThu": "Thu",
+  "weekdayAbbrFri": "Fri",
+  "weekdayAbbrSat": "Sat",
+
+  "gregWeekdayMonday": "Monday",
+  "gregWeekdayTuesday": "Tuesday",
+  "gregWeekdayWednesday": "Wednesday",
+  "gregWeekdayThursday": "Thursday",
+  "gregWeekdayFriday": "Friday",
+  "gregWeekdaySaturday": "Saturday",
+  "gregWeekdaySunday": "Sunday",
+
+  "gregMonthJanuary": "January",
+  "gregMonthFebruary": "February",
+  "gregMonthMarch": "March",
+  "gregMonthApril": "April",
+  "gregMonthMay": "May",
+  "gregMonthJune": "June",
+  "gregMonthJuly": "July",
+  "gregMonthAugust": "August",
+  "gregMonthSeptember": "September",
+  "gregMonthOctober": "October",
+  "gregMonthNovember": "November",
+  "gregMonthDecember": "December",
+
+  "specialDays": "Special Days",
+  "yearDayDesc": "After December 28 — outside any month or week",
+  "leapDayDesc": "Between June 28 and Sol 1 — outside the week",
+
+  "calendarFunFact": "The 13th month, Sol, is named after the Latin word for Sun.",
+  "plusYearDay": "+ Year Day",
+  "plusLeapDay": "+ Leap Day",
+  "daysLabel": "{count} days",
+  "@daysLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "monthXOfY": "Month {month} of 13",
+  "@monthXOfY": {
+    "placeholders": {
+      "month": { "type": "int" }
+    }
+  },
+  "swipeToNavigate": "Swipe to navigate between months",
+  "gregorianColon": "Gregorian:",
+  "weekOfMonthColon": "Week of month:",
+  "xOfY": "{x} of {y}",
+  "@xOfY": {
+    "placeholders": {
+      "x": { "type": "int" },
+      "y": { "type": "int" }
+    }
+  },
+  "gregorianRange": "Gregorian range",
+  "labelDays": "Days",
+  "labelWeeks": "Weeks",
+
+  "gregorianToIfc": "Gregorian → IFC",
+  "ifcToGregorian": "IFC → Gregorian",
+  "gregorianDate": "Gregorian Date",
+  "ifcDate": "IFC Date",
+  "monthXOfYWeekXOfY": "Month {month} of 13  •  Week {week} of 4",
+  "@monthXOfYWeekXOfY": {
+    "placeholders": {
+      "month": { "type": "int" },
+      "week": { "type": "int" }
+    }
+  },
+  "yearDaySpecialDesc": "Outside any month — a universal holiday",
+  "leapDaySpecialDesc": "Between June and Sol — outside the week",
+  "labelYear": "Year",
+  "labelType": "Type",
+  "regularDay": "Regular day",
+  "labelMonth": "Month",
+  "labelDay": "Day",
+
+  "converterFunFact": "Fun fact: In the IFC, your birthday always falls on the same day of the week, every single year.",
+
+  "yourCalendar": "Your calendar",
+  "dayOutsideCalendar": "A day outside the calendar — a universal holiday",
+  "extraDayBetween": "An extra day between June and Sol",
+  "daysEveryMonth": "28 days every month",
+
+  "learnHeader": "The whole idea\nin 30 seconds",
+  "everyMonthLooksLikeThis": "Every month looks like this",
+  "historyTitle": "History",
+  "faqTitle": "FAQ",
+
+  "quickFact1": "Every month has exactly 28 days — 4 perfect weeks.",
+  "quickFact2": "There are 13 months: the extra month is called Sol, between June and July.",
+  "quickFact3": "Year Day (December 29) sits outside any month or week — a universal holiday.",
+  "quickFact4": "In leap years, Leap Day falls between June and Sol — also outside the week.",
+
+  "timelineYear1": "1902",
+  "timelineTitle1": "Moses Cotsworth proposes the IFC",
+  "timelineDesc1": "British accountant Moses B. Cotsworth publishes \"The Rational Almanac\", proposing a 13-month calendar for simpler business accounting.",
+  "timelineYear2": "1922",
+  "timelineTitle2": "League of Nations considers calendar reform",
+  "timelineDesc2": "The League of Nations establishes a committee to study calendar reform, with the IFC as a leading candidate.",
+  "timelineYear3": "1928",
+  "timelineTitle3": "George Eastman adopts the IFC",
+  "timelineDesc3": "Kodak founder George Eastman adopts the IFC for Kodak's internal accounting. The company uses it until 1989.",
+  "timelineYear4": "1937",
+  "timelineTitle4": "UN vote falls short",
+  "timelineDesc4": "The League of Nations vote on the IFC fails to achieve unanimous approval, largely due to religious objections about breaking the 7-day Sabbath cycle.",
+  "timelineYear5": "1989",
+  "timelineTitle5": "Kodak discontinues IFC use",
+  "timelineDesc5": "After over 60 years, Kodak stops using the International Fixed Calendar for internal operations.",
+  "timelineYear6": "Now",
+  "timelineTitle6": "Growing interest online",
+  "timelineDesc6": "The IFC has found new popularity through social media and websites like 13months.net, with advocates highlighting its simplicity.",
+
+  "faq1Question": "Why 13 months?",
+  "faq1Answer": "13 × 28 = 364 days, just one short of a regular year. Each month has exactly 4 weeks, making scheduling, billing, and planning perfectly regular. The remaining day becomes Year Day, a special holiday.",
+  "faq2Question": "What is Sol?",
+  "faq2Answer": "Sol is the 7th month, inserted between June and July. It's named after the Sun (Latin \"sol\"). In the IFC, the months after June shift: Sol, July, August, September, October, November, December.",
+  "faq3Question": "What is Year Day?",
+  "faq3Answer": "Year Day falls after December 28 (the last regular day) and before January 1 of the next year. It belongs to no month and no weekday — it's a universal day off, ensuring every year starts on Sunday.",
+  "faq4Question": "How do leap years work?",
+  "faq4Answer": "Leap years follow the same rules as the Gregorian calendar (every 4 years, except centuries not divisible by 400). The extra day, Leap Day, is inserted between June 28 and Sol 1. Like Year Day, it has no weekday.",
+  "faq5Question": "What day of the week is my birthday?",
+  "faq5Answer": "In the IFC, every date falls on the same weekday every year! If your IFC birthday is the 15th, it's always a Sunday. Use the Converter tab to find your IFC birthday.",
+  "faq6Question": "Could this calendar actually be adopted?",
+  "faq6Answer": "The biggest obstacle is tradition and the disruption of the continuous 7-day Sabbath cycle. Year Day and Leap Day break the weekly pattern, which some religious traditions consider unacceptable. Despite this, the IFC remains one of the most practical calendar reform proposals.",
+
+  "onboardingWelcomeTitle": "What if every month\nwas perfect?",
+  "onboardingWelcomeBody": "Discover a calendar where every month has exactly 28 days — simple, balanced, and harmonious.",
+  "onboardingTitle1": "13 Perfect Months",
+  "onboardingBody1": "Every month has exactly 28 days — 4 perfect weeks. No more wondering what day the 15th falls on.",
+  "onboardingTitle2": "Meet Sol",
+  "onboardingBody2": "The 7th month, Sol, sits between June and July. Named after the Sun, it completes the 13-month year.",
+  "onboardingTitle3": "Year Day & Leap Day",
+  "onboardingBody3": "Year Day (after Dec 28) belongs to no month or week — a universal holiday. Leap Day works the same way, falling between June and Sol.",
+  "onboardingTitle4": "Explore the Calendar",
+  "onboardingBody4": "See today's IFC date, browse all 13 months, convert dates, and learn the history. Let's get started!",
+  "getStarted": "Get Started",
+  "next": "Next",
+  "skip": "Skip",
+
+  "funFact1": "In the IFC, every month starts on Sunday and ends on Saturday.",
+  "funFact2": "Friday the 13th occurs every month in the IFC!",
+  "funFact3": "Your IFC birthday is always on the same weekday, every year.",
+  "funFact4": "Kodak used the IFC internally for over 60 years (1928–1989).",
+  "funFact5": "The 13th month, Sol, is named after the Latin word for Sun.",
+  "funFact6": "13 × 28 = 364. Add Year Day (and Leap Day) to complete the year.",
+  "funFact7": "George Eastman was the IFC's biggest corporate champion.",
+  "funFact8": "Every IFC quarter has exactly 91 days (13 weeks).",
+
+  "funFactLabel": "Did you know?",
+  "tapForNewFact": "Tap for another fact"
+}

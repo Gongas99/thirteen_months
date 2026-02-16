@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:thirteen_months/l10n/app_localizations.dart';
+import '../l10n/ifc_localizations.dart';
 
 class GregorianDateDisplay extends StatelessWidget {
   final DateTime date;
 
   const GregorianDateDisplay({super.key, required this.date});
 
-  static const _weekdays = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-    'Friday', 'Saturday', 'Sunday',
-  ];
-
-  static const _months = [
-    '', 'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final weekday = _weekdays[date.weekday - 1];
-    final month = _months[date.month];
+    final l10n = AppLocalizations.of(context);
+    final weekday = IfcLocalizations.gregWeekday(l10n, date.weekday);
+    final month = IfcLocalizations.gregMonth(l10n, date.month);
 
     return Card(
       child: Container(
@@ -28,7 +21,7 @@ class GregorianDateDisplay extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Your calendar',
+              l10n.yourCalendar,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: theme.textTheme.bodySmall?.color,
                 fontWeight: FontWeight.w500,
