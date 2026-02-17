@@ -541,4 +541,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tapForNewFact => 'Tippen für eine weitere Tatsache';
+
+  @override
+  String get visitWebsite => 'Webseite besuchen';
 }

@@ -1083,6 +1083,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap for another fact'**
   String get tapForNewFact;
+
+  /// No description provided for @visitWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Website'**
+  String get visitWebsite;
 }
 
 class _AppLocalizationsDelegate

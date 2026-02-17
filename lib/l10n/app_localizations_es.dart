@@ -541,4 +541,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tapForNewFact => 'Toca para otro dato';
+
+  @override
+  String get visitWebsite => 'Visitar Sitio Web';
 }

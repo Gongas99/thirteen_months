@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thirteen_months/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme.dart';
 import '../../l10n/ifc_localizations.dart';
 import '../../widgets/month_grid.dart';
@@ -34,95 +35,114 @@ class LearnScreen extends StatelessWidget {
       (l10n.faq6Question, l10n.faq6Answer),
     ];
 
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header
-            Text(
-              l10n.learnHeader,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Quick facts
-            ...quickFacts.map((fact) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(Icons.check_circle,
-                          color: AppColors.primaryPurple, size: 20),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(fact, style: theme.textTheme.bodyMedium),
-                      ),
-                    ],
-                  ),
-                )),
-
-            const SizedBox(height: 24),
-
-            // Generic month grid
-            Text(
-              l10n.everyMonthLooksLikeThis,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: MonthGrid(
-                  month: 1,
-                  year: DateTime.now().year,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => launchUrl(
+          Uri.parse('https://www.13months.net/'),
+          mode: LaunchMode.externalApplication,
+        ),
+        backgroundColor: AppColors.primaryPurple,
+        elevation: 3,
+        icon: const Icon(Icons.language, color: Colors.white, size: 20),
+        label: Text(
+          l10n.visitWebsite,
+          style: theme.textTheme.labelLarge?.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 80),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header
+              Text(
+                l10n.learnHeader,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+              const SizedBox(height: 16),
 
-            const SizedBox(height: 32),
+              // Quick facts
+              ...quickFacts.map((fact) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.check_circle,
+                            color: AppColors.primaryPurple, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(fact, style: theme.textTheme.bodyMedium),
+                        ),
+                      ],
+                    ),
+                  )),
 
-            // History timeline
-            Text(
-              l10n.historyTitle,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
+              const SizedBox(height: 24),
+
+              // Generic month grid
+              Text(
+                l10n.everyMonthLooksLikeThis,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            ...timeline.asMap().entries.map((entry) {
-              final item = entry.value;
-              final isLast = entry.key == timeline.length - 1;
-              return TimelineItem(
-                year: item.$1,
-                title: item.$2,
-                description: item.$3,
-                isLast: isLast,
-              );
-            }),
-
-            const SizedBox(height: 24),
-
-            // FAQ
-            Text(
-              l10n.faqTitle,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
+              const SizedBox(height: 8),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: MonthGrid(
+                    month: 1,
+                    year: DateTime.now().year,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            ...faqItems.map((entry) => FaqTile(
-                  question: entry.$1,
-                  answer: entry.$2,
-                )),
 
-            const SizedBox(height: 32),
-          ],
+              const SizedBox(height: 32),
+
+              // History timeline
+              Text(
+                l10n.historyTitle,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ...timeline.asMap().entries.map((entry) {
+                final item = entry.value;
+                final isLast = entry.key == timeline.length - 1;
+                return TimelineItem(
+                  year: item.$1,
+                  title: item.$2,
+                  description: item.$3,
+                  isLast: isLast,
+                );
+              }),
+
+              const SizedBox(height: 24),
+
+              // FAQ
+              Text(
+                l10n.faqTitle,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...faqItems.map((entry) => FaqTile(
+                    question: entry.$1,
+                    answer: entry.$2,
+                  )),
+
+              const SizedBox(height: 32),
+            ],
+          ),
         ),
       ),
     );

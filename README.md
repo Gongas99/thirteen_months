@@ -1,6 +1,6 @@
 # 13 Months
 
-A cross-platform Flutter app that brings the **International Fixed Calendar (IFC)** to life. Browse 13 perfectly equal months, convert dates between calendars, and keep the IFC date on your home screen with native widgets.
+A cross-platform Flutter app that brings the **International Fixed Calendar (IFC)** to life. Browse 13 perfectly equal months, convert dates between calendars, and keep the IFC date on your home screen with native widgets. Based on the original project at [13months.net](https://www.13months.net/).
 
 ## What is the International Fixed Calendar?
 
@@ -130,6 +130,10 @@ flutter build apk
 # iOS
 flutter build ios
 ```
+
+## References
+
+- [13months.net](https://www.13months.net/) — the original website for the 13 Months project
 
 ## License
 
