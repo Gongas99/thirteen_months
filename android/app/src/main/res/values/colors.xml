@@ -6,4 +6,5 @@
     <color name="widget_secondary">#B3FFFFFF</color>
     <color name="widget_tertiary">#A0FFFFFF</color>
     <color name="widget_shadow">#67000000</color>
+	<color name="ic_launcher_background">#ffffff</color>
 </resources>

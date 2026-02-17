@@ -44,9 +44,19 @@ class _TodayScreenState extends State<TodayScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 32, 20, 80),
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 80),
           child: Column(
             children: [
+              // App title
+              Text(
+                l10n.label13MonthCalendar,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: AppColors.primaryPurple,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 24),
               const ClockWidget(),
               const SizedBox(height: 40),
               _buildCalendarComparison(context, appState, l10n),
@@ -214,20 +224,12 @@ class _TodayScreenState extends State<TodayScreen> {
           ),
           child: Column(
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                decoration: BoxDecoration(
-                  color: accentColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  l10n.label13MonthCalendar,
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: accentColor,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
-                  ),
+              Text(
+                l10n.todayInIfc,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: accentColor,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.8,
                 ),
               ),
               const SizedBox(height: 16),
@@ -265,35 +267,8 @@ class _TodayScreenState extends State<TodayScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 12),
-        // Divider with label
-        Row(
-          children: [
-            Expanded(
-              child: Divider(
-                color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                l10n.todayIsAlso,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant
-                      .withValues(alpha: 0.5),
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Divider(
-                color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        // Gregorian Date — compact row
+        const SizedBox(height: 20),
+        // Gregorian date section
         Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -304,34 +279,34 @@ class _TodayScreenState extends State<TodayScreen> {
               color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
             ),
           ),
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      weekday,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.calendar_today_outlined,
+                    size: 14,
+                    color: theme.colorScheme.onSurfaceVariant
+                        .withValues(alpha: 0.7),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    l10n.todayIsAlso,
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant
+                          .withValues(alpha: 0.7),
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.3,
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      '$gregMonth ${gregDate.day}, ${gregDate.year}',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 10),
               Text(
-                l10n.labelGregorian,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant
-                      .withValues(alpha: 0.5),
-                  letterSpacing: 0.5,
+                '$weekday, $gregMonth ${gregDate.day}, ${gregDate.year}',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

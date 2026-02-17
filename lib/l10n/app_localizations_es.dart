@@ -30,7 +30,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get leapDay => 'Día Bisiesto';
 
   @override
-  String get todayIsAlso => 'hoy también es';
+  String get todayInIfc => 'Hoy en el IFC';
+
+  @override
+  String get todayIsAlso => 'En el calendario Gregoriano';
 
   @override
   String get labelGregorian => 'Gregoriano';

@@ -9,7 +9,8 @@
   "label13MonthCalendar": "13-Month Calendar",
   "yearDay": "Year Day",
   "leapDay": "Leap Day",
-  "todayIsAlso": "today is also",
+  "todayInIfc": "Today in IFC",
+  "todayIsAlso": "In the Gregorian calendar",
   "labelGregorian": "Gregorian",
 
   "birthdayPromptTitle": "When is your birthday?",

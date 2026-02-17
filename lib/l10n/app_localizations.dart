@@ -148,10 +148,16 @@ abstract class AppLocalizations {
   /// **'Leap Day'**
   String get leapDay;
 
+  /// No description provided for @todayInIfc.
+  ///
+  /// In en, this message translates to:
+  /// **'Today in IFC'**
+  String get todayInIfc;
+
   /// No description provided for @todayIsAlso.
   ///
   /// In en, this message translates to:
-  /// **'today is also'**
+  /// **'In the Gregorian calendar'**
   String get todayIsAlso;
 
   /// No description provided for @labelGregorian.
