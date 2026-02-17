@@ -42,8 +42,48 @@ class MonthGrid extends StatelessWidget {
         ? theme.textTheme.bodyMedium?.copyWith(fontSize: 13)
         : theme.textTheme.bodyMedium;
 
+    Widget buildWeekRow(int week) {
+      return Row(
+        children: List.generate(7, (weekday) {
+          final day = week * 7 + weekday + 1;
+          final isHighlighted = _isToday(day);
+
+          return Expanded(
+            child: GestureDetector(
+              onTap: onDayTap != null ? () => onDayTap!(day) : null,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: compact ? 2 : 6,
+                ),
+                decoration: isHighlighted
+                    ? BoxDecoration(
+                        color: AppColors.primaryPurple,
+                        borderRadius:
+                            BorderRadius.circular(compact ? 4 : 8),
+                      )
+                    : null,
+                child: Center(
+                  child: Text(
+                    '$day',
+                    style: dayStyle?.copyWith(
+                      color: isHighlighted
+                          ? Colors.white
+                          : (weekday == 6
+                              ? theme.textTheme.bodySmall?.color
+                              : null),
+                      fontWeight: isHighlighted ? FontWeight.bold : null,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    }
+
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: compact ? MainAxisSize.max : MainAxisSize.min,
       children: [
         // Header row: S M T W T F S
         Row(
@@ -61,43 +101,10 @@ class MonthGrid extends StatelessWidget {
         SizedBox(height: compact ? 2 : 8),
         // 4 weeks x 7 days
         for (int week = 0; week < 4; week++)
-          Row(
-            children: List.generate(7, (weekday) {
-              final day = week * 7 + weekday + 1;
-              final isHighlighted = _isToday(day);
-
-              return Expanded(
-                child: GestureDetector(
-                  onTap: onDayTap != null ? () => onDayTap!(day) : null,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: compact ? 4 : 6,
-                    ),
-                    decoration: isHighlighted
-                        ? BoxDecoration(
-                            color: AppColors.primaryPurple,
-                            borderRadius: BorderRadius.circular(compact ? 4 : 8),
-                          )
-                        : null,
-                    child: Center(
-                      child: Text(
-                        '$day',
-                        style: dayStyle?.copyWith(
-                          color: isHighlighted
-                              ? Colors.white
-                              : (weekday == 6
-                                  ? theme.textTheme.bodySmall?.color
-                                  : null),
-                          fontWeight:
-                              isHighlighted ? FontWeight.bold : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
+          if (compact)
+            Expanded(child: buildWeekRow(week))
+          else
+            buildWeekRow(week),
       ],
     );
   }
